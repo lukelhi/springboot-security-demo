@@ -1,10 +1,10 @@
 package com.test.springsecuritydemo.security.controller;
 
-import com.test.springsecuritydemo.security.vo.JwtAuthenticationRequest;
-import com.test.springsecuritydemo.security.vo.JwtAuthenticationResponse;
 import com.test.springsecuritydemo.security.AuthenticationException;
 import com.test.springsecuritydemo.security.JwtTokenUtil;
 import com.test.springsecuritydemo.security.JwtUser;
+import com.test.springsecuritydemo.security.vo.JwtAuthenticationRequest;
+import com.test.springsecuritydemo.security.vo.JwtAuthenticationResponse;
 import io.swagger.annotations.Api;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
@@ -29,19 +29,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationRestController {
 
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService userDetailsService;
     @Value("${jwt.header}")
     private String tokenHeader;
 
-    private final AuthenticationManager authenticationManager;
-
-    private final JwtTokenUtil jwtTokenUtil;
-
-    private final UserDetailsService userDetailsService;
-
     @Autowired
     public AuthenticationRestController(AuthenticationManager authenticationManager,
-        JwtTokenUtil jwtTokenUtil,
-        @Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService) {
+                                        JwtTokenUtil jwtTokenUtil,
+                                        @Qualifier("jwtUserDetailsService")
+                                            UserDetailsService userDetailsService) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userDetailsService = userDetailsService;

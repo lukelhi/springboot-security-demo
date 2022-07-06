@@ -23,7 +23,7 @@ apply plugin: 'checkstyle'
 checkstyle {
     // The version of the code quality tool to be used.
     // The most recent version of Checkstyle can be found at https://github.com/checkstyle/checkstyle/releases
-    toolVersion = "8.8"
+    toolVersion = "8.29"
 
     // The source sets to be analyzed as part of the check and build tasks.
     // Use 'sourceSets = []' to remove Checkstyle from the check and build tasks.
@@ -34,4 +34,22 @@ checkstyle {
 
     // Whether or not rule violations are to be displayed on the console.
     showViolations = true
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }
+
+checkstyleMain {
+    // 代码检查跳过一些我们认为不需要检查的package
+    exclude 'me/gavincook/moon/mybatis/**'
+    exclude 'me/gavincook/moon/infrastructure/**'
+    /*reports {
+        // html形式的检查报告生成路径
+        html.destination rootProject.file("build/reports/checkstyle/main.html")
+    }*/
+}
+// test-->java
+checkstyleTest {
+    /*reports {
+        html.destination rootProject.file("build/reports/checkstyle/test.html")
+    }*/
+}
+
